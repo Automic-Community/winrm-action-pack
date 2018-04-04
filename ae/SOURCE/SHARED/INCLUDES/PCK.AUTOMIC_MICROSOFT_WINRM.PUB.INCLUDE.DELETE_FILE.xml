@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBI name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.DELETE_FILE">
+<HEADER state="1">
+<Title>Delete File</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[!delete temp file
+: IF &UC4RB_WRM_COMMAND# NE ""
+:  PUT_PROMPT_BUFFER AGENT# = &AGENT#
+:  PUT_PROMPT_BUFFER LOGIN# = &LOGIN#
+:  PUT_PROMPT_BUFFER  UC4RB_DIR_FILE_RM_FAIL# = "YES"
+:  PUT_PROMPT_BUFFER UC4RB_DIR_FILE_RM_NAME# = &UC4RB_COMMAND_FILE_PATH#
+:  SET &OBJECT# = "PCK.AUTOMIC_FILESYSTEM.PUB.ACTION.DELETE"
+:  SET &ACTOBJ# = ACTIVATE_UC_OBJECT(&OBJECT#,WAIT)
+:  SET &STATUS# = GET_UC_OBJECT_STATUS(,&ACTOBJ#,"RETCODE")
+:  P "EXECUTED OBJECT [&OBJECT#] STATUS: &STATUS#"
+:  IF &STATUS# <> "0"
+:    STOP MSG, 50, "Error while executing &OBJECT# object"
+:  ELSE
+:  P "File &UC4RB_COMMAND_FILE_PATH# deleted successfully."
+:  ENDIF
+:  IF &ACTOBJ# = "0"
+:    SET &ERRNR# = SYS_LAST_ERR_NR()
+:    SET &ERRINS#  = SYS_LAST_ERR_INS()
+:    SET &MESSAGE# = GET_MSG_TXT(&ERRNR#,&ERRINS#)
+:    PRINT "Error while activating object :&MESSAGE#"
+:    STOP MSG, 50, "Error while activating &OBJECT# object :&MESSAGE#"
+:  ENDIF
+: ENDIF
+]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

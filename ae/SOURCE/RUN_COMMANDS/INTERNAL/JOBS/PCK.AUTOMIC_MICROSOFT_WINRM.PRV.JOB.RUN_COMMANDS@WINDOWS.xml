@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBS_WINDOWS AttrType="WINDOWS" name="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.JOB.RUN_COMMANDS@WINDOWS">
+<XHEADER state="1">
+<Title/>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<Active>1</Active>
+<OH_SubType/>
+<CustomAttributes KeyListID="0" dataRequestID="0"/>
+</XHEADER>
+<OUTPUTREG state="1">
+<FileReg/>
+</OUTPUTREG>
+<SYNCREF state="1">
+<Syncs/>
+</SYNCREF>
+<ATTR_JOBS state="1">
+<Queue>CLIENT_QUEUE</Queue>
+<StartType/>
+<HostDst>|&lt;WIN&gt;|HOST</HostDst>
+<HostATTR_Type>WINDOWS</HostATTR_Type>
+<CodeName/>
+<Login/>
+<IntAccount/>
+<ExtRepDef>1</ExtRepDef>
+<ExtRepAll>0</ExtRepAll>
+<ExtRepNone>0</ExtRepNone>
+<AutoDeactNo>1</AutoDeactNo>
+<AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
+<AutoDeactErrorFree>0</AutoDeactErrorFree>
+<DeactWhen/>
+<DeactDelay>0</DeactDelay>
+<AutoDeactAlways>0</AutoDeactAlways>
+<AttDialog>0</AttDialog>
+<ActAtRun>1</ActAtRun>
+<Consumption>0</Consumption>
+<UC4Priority>0</UC4Priority>
+<MaxParallel2>0</MaxParallel2>
+<MpElse1>1</MpElse1>
+<MpElse2>0</MpElse2>
+<TZ/>
+</ATTR_JOBS>
+<ATTR_WINDOWS state="1">
+<OutputDb>1</OutputDb>
+<OutputDbErr>0</OutputDbErr>
+<OutputFile>0</OutputFile>
+<IsGenerated>0</IsGenerated>
+<BAT>0</BAT>
+<COM>0</COM>
+<WinBatch>1</WinBatch>
+<Standard>1</Standard>
+<Minimized>0</Minimized>
+<Maximized>0</Maximized>
+<JObjDefault>1</JObjDefault>
+<JObjYes>0</JObjYes>
+<JObjNo>0</JObjNo>
+<WorkingDirectory>c:\</WorkingDirectory>
+<Command/>
+<LogOn>0</LogOn>
+<ShowJob>0</ShowJob>
+</ATTR_WINDOWS>
+<RUNTIME state="1">
+<MaxRetCode>0</MaxRetCode>
+<MrcExecute/>
+<MrcElseE>0</MrcElseE>
+<FcstStatus>0| |</FcstStatus>
+
+<ErtMethodDef>1</ErtMethodDef>
+<ErtMethodFix>0</ErtMethodFix>
+<ErtFix>0</ErtFix>
+<ErtDynMethod>2|Average</ErtDynMethod>
+<ErtMethodDyn>0</ErtMethodDyn>
+<ErtCnt>0</ErtCnt>
+<ErtCorr>0</ErtCorr>
+<ErtIgn>0</ErtIgn>
+<ErtIgnFlg>0</ErtIgnFlg>
+<ErtMinCnt>0</ErtMinCnt>
+<MrtMethodNone>1</MrtMethodNone>
+<MrtMethodFix>0</MrtMethodFix>
+<MrtFix>0</MrtFix>
+<MrtMethodErt>0</MrtMethodErt>
+<MrtErt>0</MrtErt>
+<MrtMethodDate>0</MrtMethodDate>
+<MrtDays>0</MrtDays>
+<MrtTime>00:00</MrtTime>
+<MrtTZ/>
+<SrtMethodNone>1</SrtMethodNone>
+<SrtMethodFix>0</SrtMethodFix>
+<SrtFix>0</SrtFix>
+<SrtMethodErt>0</SrtMethodErt>
+<SrtErt>0</SrtErt>
+<MrtCancel>0</MrtCancel>
+<MrtExecute>0</MrtExecute>
+<MrtExecuteObj/>
+</RUNTIME>
+<DYNVALUES state="1">
+<dyntree>
+<node content="1" id="VALUE" name="Variables" parent="" type="VALUE">
+<VALUE state="1">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+</dyntree>
+</DYNVALUES>
+<ROLLBACK state="1">
+<RollbackFlag>0</RollbackFlag>
+<CBackupObj/>
+<CRollbackObj/>
+<FBackupPath/>
+<FDeleteBefore>0</FDeleteBefore>
+<FInclSubDirs>0</FInclSubDirs>
+</ROLLBACK>
+<PRE_SCRIPT mode="1" replacementmode="1" state="1">
+<PSCRI><![CDATA[:INC PCK.ITPA_SHARED.PUB.INCLUDE.START_STOP_JOB_ACCORDING_TO_AGENT_OS]]></PSCRI>
+</PRE_SCRIPT>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[!------------------------------------  Validation of Parameters Command/Script File-----------------------------------------------------------------------------------------------
+: SET &FLAG# = 0
+: IF "" EQ &UC4RB_WRM_COMMAND# OR &UC4RB_WRM_SCRIPT_FILE#
+:       SET &FLAG# = &FLAG# + 1
+: ENDIF
+
+: IF "" EQ  &UC4RB_WRM_SCRIPT_FILE#
+:       SET &FLAG# = &FLAG# + 1
+: ENDIF
+
+: IF &FLAG# EQ  2 OR 0
+
+:      SET &UC4RB_LOGGING_ERROR# = "PLEASE PROVIDE ONE OF THESE PARAMETERS FOR RUNNING COMMAND : Command OR Script File"
+:      INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR
+       $errors = 1
+!:      INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CHECK_ERRORSTATUS
+: ENDIF
+
+
+
+!-------------------------------------Logging input parameters-------------------------------------------------------------------------------------------------
+
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.PARAM_VALIDATION
+: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.LOGGING_CONNECTION_DETAILS
+
+!Command
+!: SET &UC4RB_LOGGING_PARAMETER# = "Command"
+!: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_COMMAND#
+!: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+!Script File
+: SET &UC4RB_LOGGING_PARAMETER# = "Script File"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_SCRIPT_FILE#
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+!Return Code
+: SET &UC4RB_LOGGING_PARAMETER# = "Return Code"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_RET_CODE#
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+!Timeout
+: SET &UC4RB_LOGGING_PARAMETER# = "Timeout"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_TIMEOUT#
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+!Report Max Size
+: SET &UC4RB_LOGGING_PARAMETER# = "Report Max Size"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_MAX_REP_CHAR#
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+!Output File Path
+: SET &UC4RB_LOGGING_PARAMETER# = "Output File Path"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_OUTPUT_FILE#
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+!Error File Path
+: SET &UC4RB_LOGGING_PARAMETER# = "Error File Path"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_ERROR_FILE#
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
+
+
+
+Try{
+! Creating Session with remote host and save session in $session powershell variable
+: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CREATE_SESSION
+!    Timeout
+:     SET &TMP# = MULT(&UC4RB_WRM_TIMEOUT#, 1000)
+:      SET &UC4RB_WRM_PSO_CMDLET# = STR_CAT(&UC4RB_WRM_PSO_CMDLET#, " -OperationTimeout &TMP#")
+
+!    Session advance option commandlet
+:    SET &UC4RB_LOGGING_INFO# =  "CREDENTIAL COMMANDLET: &UC4RB_WRM_PSO_CMDLET#"
+:    INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+
+:    IF &FLAG# EQ 1
+      &UC4RB_WRM_PSO_CMDLET#
+:    ENDIF
+
+!    Creation session commandlet
+:    SET &UC4RB_LOGGING_INFO# =  "CREDENTIAL COMMANDLET: &UC4RB_WRM_SESSION_CMDLET#"
+:    INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+     &UC4RB_WRM_SESSION_CMDLET#
+
+
+: IF &UC4RB_WRM_COMMAND# NE ""
+!   Get File path
+:   SET &AGENT_TEMPDIR# = GET_VAR('UC_EX_PATH_TEMP', &AGENT#)
+!   Baseline File
+:   SET &UC4RB_COMMAND_FILE_PATH# = STR_CAT(&AGENT_TEMPDIR#,"commands-&$RUNID#.ps1")
+:   SET &UC4RB_FILE_CONTENT# = &UC4RB_WRM_COMMAND#
+!   Creating file in the temp dir
+:   SET &UC4RB_FILE_PATH#=&UC4RB_COMMAND_FILE_PATH#
+:   INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CREATE_FILE
+:   SET &TEMP_OPTION_VALUE# = &UC4RB_COMMAND_FILE_PATH#
+:   INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
+      $command_file = "&UC4RB_WRM_ESC_VALUE#"
+:   PUBLISH &UC4RB_COMMAND_FILE_PATH#,,"TASK"
+:   ELSE
+:     SET &TEMP_OPTION_VALUE# = &UC4RB_WRM_SCRIPT_FILE#
+:     INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
+      $command_file =  "&UC4RB_WRM_ESC_VALUE#"
+: ENDIF
+
+ if($command_file){
+! --- Execute the remote command using script file ---
+!
+
+         Write-Host `nExecuting command ..`n
+          Try{
+             $logs = Invoke-Command -Session $session -FilePath $command_file
+             $remoteLastExitCode = Invoke-Command -ScriptBlock { $lastExitCode} -Session $session
+             if ($remoteLastExitCode -ne 0){
+                    Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
+                    $errors = 1
+                    throw "Error occured. Please check log file for more information"
+             }else{
+:                 IF  &UC4RB_WRM_OUTPUT_FILE# NE ""
+:                     SET &TEMP_OPTION_VALUE# = &UC4RB_WRM_OUTPUT_FILE#
+:                     INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
+!                 To prevent an existing file from being overwritten, use the ?NoClobber parameter
+                      Out-File -FilePath "&UC4RB_WRM_ESC_VALUE#" -Width 256 -InputObject $logs -Encoding ascii -Force
+
+:             ENDIF
+!                   Report count handling
+                    $count =  Measure-Object -Character -InputObject $logs
+                    $maxReportChar = &UC4RB_WRM_MAX_REP_CHAR#
+                   if( $maxReportChar -lt $count.Characters){
+                          $logs.Substring(0,$maxReportChar)
+                    }else{
+                       $logs
+                    }
+                    Write-Host `nRemote Command executed successfully`n
+
+             }
+		 }Catch {
+   			      $errors = 1
+:                 SET &TEMP_OPTION_VALUE# = &UC4RB_WRM_ERROR_FILE#
+:                 INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
+  			      Out-File -FilePath "E:\tmp\powerShell-error-log.txt" -Width 256 -InputObject $error -Encoding ascii -Force
+                  throw $error
+         }
+
+ }
+
+}Catch {
+   $errors = 1
+   Write-Host 'ERROR:' $($error[0].Exception.Message)
+
+}Finally {
+! ----- Close the PSSession session -----
+  if($session){
+    Remove-PSSession -Session $session
+    Write-Host `nRemote Session with host &UC4RB_WRM_HOST# closed successfully ..........`n
+  }
+}
+
+: SET &UC4RB_LOGGING_INFO# = "******** RUN COMMANDS ACTION EXECUTED SUCCESSFULLY ********"
+: SET &UC4RB_LOGGING_ERROR# = "******** RUN COMMANDS ACTION FAILED ********"
+
+!------------------------------------------ Error Handling -----------------------------------------------------------------------------------------------------
+:INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CHECK_ERRORSTATUS]]></MSCRI>
+</SCRIPT>
+<OUTPUTSCAN state="1">
+<Inherit>N</Inherit>
+<filterobjects/>
+<HostFsc/>
+<LoginFsc/>
+</OUTPUTSCAN>
+<POST_SCRIPT mode="1" replacementmode="1" state="1">
+<OSCRI><![CDATA[!Post processing
+!: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.DELETE_FILE]]></OSCRI>
+</POST_SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBS_WINDOWS>
+</uc-export>
