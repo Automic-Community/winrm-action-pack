@@ -7,7 +7,25 @@
 <OH_SubType/>
 </HEADER>
 <DOCU_Docu state="1" type="text">
-<DOC/>
+<DOC><![CDATA[About the Package
+An action pack for WinRM using PowerShell. 
+
+=Supported versions=
+
+=Setup=
+* WInRM must be configured and able to access the remote host.
+* The Agent should be able to execute the command on the remote host using PowerShell.
+
+=Common Inputs=
+(None)
+
+=Actions=
+Following actions are supported.
+
+* Action name:  PCK.AUTOMIC_MICROSOFT_WINRM.PUB.ACTION.RUN_COMMANDS
+* Action Description:  This action runs provided commands on remote server.
+
+]]></DOC>
 </DOCU_Docu>
 </DOCU>
 </uc-export>

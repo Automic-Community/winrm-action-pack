@@ -340,7 +340,56 @@
 <MSCRI/>
 </SCRIPT>
 <DOCU_Docu state="1" type="text">
-<DOC/>
+<DOC><![CDATA[= Action name =
+PCK.AUTOMIC_MICROSOFT_WINRM.PUB.ACTION.RUN_COMMANDS
+
+= General description =
+This action runs provided commands/Script File on the remote server. You can provide multiple commands separated by a comma.
+
+= Failure Conditions =
+* If an invalid command(s) is provided.
+* Provided Script file is not a PowerShell script file.
+
+= Inputs =
+- Command              : Provide command you want to run on the remote machine. Multiple commands should be split by a semicolon ( ; ). Required if you do not specify Script File (Conditional Field)                                                                              
+- Script File               : Provide the name of the script file with the full path which will be executed on the remote machine. The script must reside on the local computer or in a directory that the local computer can access. E.g. C:\script\environment.ps1 (Conditional Field)   
+- Return Code	         : Provide expected return code. It will be compared with command exit code. If they don't match action fails. If empty no check is performed. (Optional Field)   
+- Timeout                  : Timeout duration for running this command. Use 0 for unlimited time. (Optional Field)   
+- Report Max Size    : Maximum number of characters of the output to write in the Job Report. (Optional Field)   
+- Output File Path     : Full path where output file will be written. E.g. C:\logs\run-commands-INFO.log   (Optional Field)                                                                                 
+- Error File Path        : Full path where error file will be written. E.g. C:\logs\run-commands-ERROR.log (Optional Field)   
+
+= Conditional Field =
+Provide one of these input Commands or Script File.
+
+= Behavior =
+* The  Output File Path and Error File Path are the absolute paths of the files on the Agent OS.
+* Execute the commands in the same way as specified in the user input. If someone set a variable and want to use in the subsequent command. It should be available there as well.
+* We simply open remote PowerShell session to the target machine and forward all the commands to the target machine. Just like someone manually run all the commands on to target machine.
+* The action's return code will be code returned by last executed command in case there are multiple commands.
+
+=Return Value=
+(none)
+
+= Outputs =
+* Return code is 0 in case of success.
+* Return code is non-zero in case of failure.
+
+= Rollback =
+(none)
+
+= Logging =
+AE logs will be displayed in the AE report.
+
+= Example =
+1. For single command
+                  Commands = ipconfig
+2. For multiple commands.
+                 Command: ipconfig;DIR
+3. Multiple commands can also be executed as (newline separated):
+                Commands: hostname
+                                     pwd
+]]></DOC>
 </DOCU_Docu>
 </JOBP>
 </uc-export>

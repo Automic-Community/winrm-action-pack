@@ -117,22 +117,17 @@
 <SCRIPT mode="1" state="1">
 <MSCRI><![CDATA[!------------------------------------  Validation of Parameters Command/Script File-----------------------------------------------------------------------------------------------
 : SET &FLAG# = 0
-: IF "" EQ &UC4RB_WRM_COMMAND# OR &UC4RB_WRM_SCRIPT_FILE#
+: IF &UC4RB_WRM_COMMAND# NE ""
 :       SET &FLAG# = &FLAG# + 1
 : ENDIF
 
-: IF "" EQ  &UC4RB_WRM_SCRIPT_FILE#
+: IF &UC4RB_WRM_SCRIPT_FILE# NE ""
 :       SET &FLAG# = &FLAG# + 1
 : ENDIF
 
 : IF &FLAG# EQ  2 OR 0
-
-:      SET &UC4RB_LOGGING_ERROR# = "PLEASE PROVIDE ONE OF THESE PARAMETERS FOR RUNNING COMMAND : Command OR Script File"
-:      INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR
-       $errors = 1
-!:      INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CHECK_ERRORSTATUS
+:   STOP MSG, 50, "Either provide Command or Script file for execution"
 : ENDIF
-
 
 
 !-------------------------------------Logging input parameters-------------------------------------------------------------------------------------------------
@@ -221,18 +216,25 @@ Try{
 
  if($command_file){
 ! --- Execute the remote command using script file ---
-!
-
-         Write-Host `nExecuting command ..`n
+          Write-Host `nExecuting command ..`n
           Try{
              $logs = Invoke-Command -Session $session -FilePath $command_file
              $remoteLastExitCode = Invoke-Command -ScriptBlock { $lastExitCode} -Session $session
-             if ($remoteLastExitCode -ne 0){
+:           IF &UC4RB_WRM_RET_CODE# NE ""
+               if ($remoteLastExitCode -ne &UC4RB_WRM_RET_CODE#){
+                      Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
+                      $errors = 1
+                      throw "Provided Return Code did not match with executed command return code"
+               }
+:           ELSE
+              If ($remoteLastExitCode -ne 0) {
                     Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
                     $errors = 1
                     throw "Error occured. Please check log file for more information"
-             }else{
-:                 IF  &UC4RB_WRM_OUTPUT_FILE# NE ""
+              }
+:           ENDIF
+            else{
+:                 IF &UC4RB_WRM_OUTPUT_FILE# NE ""
 :                     SET &TEMP_OPTION_VALUE# = &UC4RB_WRM_OUTPUT_FILE#
 :                     INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
 !                 To prevent an existing file from being overwritten, use the ?NoClobber parameter
@@ -286,7 +288,7 @@ Try{
 </OUTPUTSCAN>
 <POST_SCRIPT mode="1" replacementmode="1" state="1">
 <OSCRI><![CDATA[!Post processing
-!: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.DELETE_FILE]]></OSCRI>
+: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.DELETE_FILE]]></OSCRI>
 </POST_SCRIPT>
 <DOCU_Docu state="1" type="text">
 <DOC/>
