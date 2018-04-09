@@ -1,0 +1,21 @@
+*** Settings ***
+Resource          ../../../Env/default.txt
+
+*** Variables ***
+#---- Promptset Fields --------------------------------------------------------------------------------------
+#----Global Variables---------------------------------------------------------------------------------------
+${Host_Name}      vviespartan03.sbb01.spoc.global
+${Port}           5986
+${Username}       sbb01\USERNAME
+${Password}       ADD PASSWORD HERE
+${Enable_Multi_Hop}    NO
+${Skip_CA_Check}    NO
+${Skip_CN_Check}    NO
+${Use_SSL}        YES
+#----Run Commands----------------
+${Commands}       pwd
+${Command_FilePath}    C:\\script.txt
+${Expected_ReturnCode}    0
+${Timeout}        0
+${Report_Max_Size}    64
+${Output_FilePath}    C:\\output.txt
