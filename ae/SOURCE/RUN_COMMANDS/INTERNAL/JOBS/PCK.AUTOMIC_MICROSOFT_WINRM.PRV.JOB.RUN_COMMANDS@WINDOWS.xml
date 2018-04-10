@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
 <JOBS_WINDOWS AttrType="WINDOWS" name="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.JOB.RUN_COMMANDS@WINDOWS">
 <XHEADER state="1">
-<Title/>
+<Title>Run Commands</Title>
 <ArchiveKey1/>
 <ArchiveKey2/>
 <Active>1</Active>
@@ -25,14 +25,14 @@
 <ExtRepDef>1</ExtRepDef>
 <ExtRepAll>0</ExtRepAll>
 <ExtRepNone>0</ExtRepNone>
-<AutoDeactNo>1</AutoDeactNo>
+<AutoDeactNo>0</AutoDeactNo>
 <AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
 <AutoDeactErrorFree>0</AutoDeactErrorFree>
 <DeactWhen/>
 <DeactDelay>0</DeactDelay>
-<AutoDeactAlways>0</AutoDeactAlways>
+<AutoDeactAlways>1</AutoDeactAlways>
 <AttDialog>0</AttDialog>
-<ActAtRun>1</ActAtRun>
+<ActAtRun>0</ActAtRun>
 <Consumption>0</Consumption>
 <UC4Priority>0</UC4Priority>
 <MaxParallel2>0</MaxParallel2>
@@ -135,13 +135,9 @@
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.PARAM_VALIDATION
 : INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.LOGGING_CONNECTION_DETAILS
 
-!Command
-!: SET &UC4RB_LOGGING_PARAMETER# = "Command"
-!: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_COMMAND#
-!: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
 
 !Script File
-: SET &UC4RB_LOGGING_PARAMETER# = "Script File"
+: SET &UC4RB_LOGGING_PARAMETER# = "Command File Path"
 : SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_SCRIPT_FILE#
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
 
@@ -155,23 +151,8 @@
 : SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_TIMEOUT#
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
 
-!Report Max Size
-: SET &UC4RB_LOGGING_PARAMETER# = "Report Max Size"
-: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_MAX_REP_CHAR#
-: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
-
-!Output File Path
-: SET &UC4RB_LOGGING_PARAMETER# = "Output File Path"
-: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_OUTPUT_FILE#
-: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
-
-!Error File Path
-: SET &UC4RB_LOGGING_PARAMETER# = "Error File Path"
-: SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_ERROR_FILE#
-: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
 
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
-
 
 
 Try{
@@ -182,16 +163,15 @@ Try{
 :      SET &UC4RB_WRM_PSO_CMDLET# = STR_CAT(&UC4RB_WRM_PSO_CMDLET#, " -OperationTimeout &TMP#")
 
 !    Session advance option commandlet
-:    SET &UC4RB_LOGGING_INFO# =  "CREDENTIAL COMMANDLET: &UC4RB_WRM_PSO_CMDLET#"
-:    INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+:    P  "Advance session option commandlet: &UC4RB_WRM_PSO_CMDLET#"
+
 
 :    IF &FLAG# EQ 1
       &UC4RB_WRM_PSO_CMDLET#
 :    ENDIF
 
 !    Creation session commandlet
-:    SET &UC4RB_LOGGING_INFO# =  "CREDENTIAL COMMANDLET: &UC4RB_WRM_SESSION_CMDLET#"
-:    INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+:    P "Creation session commandlet: &UC4RB_WRM_SESSION_CMDLET#"
      &UC4RB_WRM_SESSION_CMDLET#
 
 :   SET &UC4RB_COMMAND_FILE_PATH# =""
@@ -214,53 +194,20 @@ Try{
 : ENDIF
 :   PUBLISH &UC4RB_COMMAND_FILE_PATH#,,"TASK"
 
- if($command_file){
 ! --- Execute the remote command using script file ---
           Write-Host `nExecuting command ..`n
-          Try{
-             $logs = Invoke-Command -Session $session -FilePath $command_file
+
+             Invoke-Command -Session $session -FilePath $command_file
              $remoteLastExitCode = Invoke-Command -ScriptBlock { $lastExitCode} -Session $session
-:           IF &UC4RB_WRM_RET_CODE# NE ""
+               Write-Host "UC4RB_WRM_RETURN_CODE::=$remoteLastExitCode"
+:             IF &UC4RB_WRM_RET_CODE# NE ""
                if ($remoteLastExitCode -ne &UC4RB_WRM_RET_CODE#){
                       Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
                       $errors = 1
-                      throw "Provided Return Code did not match with executed command return code"
+                      throw "Return Code did not match with executed command return code. Please check log file\Job Report for more information"
                }
-:           ELSE
-              If ($remoteLastExitCode -ne 0) {
-                    Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
-                    $errors = 1
-                    throw "Error occured. Please check log file\Report for more information"
-              }
-:           ENDIF
-            else{
-:                 IF &UC4RB_WRM_OUTPUT_FILE# NE ""
-:                     SET &TEMP_OPTION_VALUE# = &UC4RB_WRM_OUTPUT_FILE#
-:                     INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
-!                 To prevent an existing file from being overwritten, use the ?NoClobber parameter
-                      Out-File -FilePath "&UC4RB_WRM_ESC_VALUE#" -Width 256 -InputObject $logs -Encoding ascii -Force
-
 :             ENDIF
-!                   Report count handling
-                    $count =  Measure-Object -Character -InputObject $logs
-                    $maxReportChar = &UC4RB_WRM_MAX_REP_CHAR#
-                   if( $maxReportChar -lt $count.Characters){
-                          $logs.Substring(0,$maxReportChar)
-                    }else{
-                       $logs
-                    }
                     Write-Host `nRemote Command executed successfully`n
-
-             }
-		 }Catch {
-   			      $errors = 1
-:                 SET &TEMP_OPTION_VALUE# = &UC4RB_WRM_ERROR_FILE#
-:                 INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
-  			      Out-File -FilePath "E:\tmp\powerShell-error-log.txt" -Width 256 -InputObject $error -Encoding ascii -Force
-                  throw $error
-         }
-
- }
 
 }Catch {
    $errors = 1
@@ -288,7 +235,19 @@ Try{
 </OUTPUTSCAN>
 <POST_SCRIPT mode="1" replacementmode="1" state="1">
 <OSCRI><![CDATA[!Post processing
-: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.DELETE_FILE]]></OSCRI>
+: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.DELETE_FILE
+
+:SET &STATUS# = GET_UC_OBJECT_STATUS(,,"RETCODE")
+:SET &UC4RB_WRM_RETURN_CODE# = ""
+:IF &STATUS# EQ 0
+:    SET &HND# = PREP_PROCESS_REPORT("JOBS",, "REP","UC4RB_WRM_RETURN_CODE*","COL=DELIMITER", 'DELIMITER=*::=*')
+:    PROCESS &HND#
+:      SET &KEY# = GET_PROCESS_LINE(&HND#,1)
+:      SET &UC4RB_WRM_RETURN_CODE# = GET_PROCESS_LINE(&HND#,2)
+:    ENDPROCESS
+:    CLOSE_PROCESS &HND#
+:ENDIF
+:PUBLISH &UC4RB_WRM_RETURN_CODE#,,"WORKFLOW"]]></OSCRI>
 </POST_SCRIPT>
 <DOCU_Docu state="1" type="text">
 <DOC/>

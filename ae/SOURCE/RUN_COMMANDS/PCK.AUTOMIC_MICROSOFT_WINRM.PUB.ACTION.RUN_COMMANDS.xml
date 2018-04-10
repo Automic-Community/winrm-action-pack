@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
 <JOBP AllowExternal="1" name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.ACTION.RUN_COMMANDS">
 <XHEADER state="1">
-<Title>Run Command</Title>
+<Title>Run Commands</Title>
 <ArchiveKey1/>
 <ArchiveKey2/>
 <Active>1</Active>
@@ -58,7 +58,7 @@
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
 <UC4RB_WRM_CA_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CA_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CA_CHECKs.00>
 <UC4RB_WRM_CN_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CN_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CN_CHECKs.00>
-<UC4RB_WRM_DOMAINs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_DOMAIN#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_WRM_CONN_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CONN_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">180</UC4RB_WRM_CONN_TIMEOUTs.00>
 <UC4RB_WRM_HOSTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_HOST#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
 <UC4RB_WRM_MULTI_HOPs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MULTI_HOP#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_MULTI_HOPs.00>
 <UC4RB_WRM_PASSWORDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PASSWORD#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">--10</UC4RB_WRM_PASSWORDs.00>
@@ -72,10 +72,7 @@
 <PROMPTSET name="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">
 <UC4RB_WRM_COMMANDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_COMMAND#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_ERROR_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_ERROR_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_MAX_REP_CHARs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MAX_REP_CHAR#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">5000</UC4RB_WRM_MAX_REP_CHARs.00>
-<UC4RB_WRM_OUTPUT_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_OUTPUT_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_RET_CODEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_RET_CODE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
+<UC4RB_WRM_RET_CODEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_RET_CODE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">0</UC4RB_WRM_RET_CODEs.00>
 <UC4RB_WRM_SCRIPT_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_SCRIPT_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
 <UC4RB_WRM_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">0</UC4RB_WRM_TIMEOUTs.00>
 </PRPTBOX>
@@ -134,7 +131,7 @@
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
 <UC4RB_WRM_CA_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CA_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CA_CHECKs.00>
 <UC4RB_WRM_CN_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CN_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CN_CHECKs.00>
-<UC4RB_WRM_DOMAINs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_DOMAIN#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_WRM_CONN_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CONN_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">180</UC4RB_WRM_CONN_TIMEOUTs.00>
 <UC4RB_WRM_HOSTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_HOST#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
 <UC4RB_WRM_MULTI_HOPs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MULTI_HOP#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_MULTI_HOPs.00>
 <UC4RB_WRM_PASSWORDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PASSWORD#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">--10</UC4RB_WRM_PASSWORDs.00>
@@ -148,10 +145,7 @@
 <PROMPTSET name="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">
 <UC4RB_WRM_COMMANDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_COMMAND#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_ERROR_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_ERROR_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_MAX_REP_CHARs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MAX_REP_CHAR#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">5000</UC4RB_WRM_MAX_REP_CHARs.00>
-<UC4RB_WRM_OUTPUT_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_OUTPUT_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_RET_CODEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_RET_CODE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
+<UC4RB_WRM_RET_CODEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_RET_CODE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">0</UC4RB_WRM_RET_CODEs.00>
 <UC4RB_WRM_SCRIPT_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_SCRIPT_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
 <UC4RB_WRM_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">0</UC4RB_WRM_TIMEOUTs.00>
 </PRPTBOX>
@@ -196,7 +190,7 @@
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
 <UC4RB_WRM_CA_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CA_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CA_CHECKs.00>
 <UC4RB_WRM_CN_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CN_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CN_CHECKs.00>
-<UC4RB_WRM_DOMAINs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_DOMAIN#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_WRM_CONN_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CONN_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">180</UC4RB_WRM_CONN_TIMEOUTs.00>
 <UC4RB_WRM_HOSTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_HOST#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
 <UC4RB_WRM_MULTI_HOPs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MULTI_HOP#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_MULTI_HOPs.00>
 <UC4RB_WRM_PASSWORDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PASSWORD#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">--10</UC4RB_WRM_PASSWORDs.00>
@@ -210,10 +204,7 @@
 <PROMPTSET name="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">
 <UC4RB_WRM_COMMANDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_COMMAND#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_ERROR_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_ERROR_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_MAX_REP_CHARs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MAX_REP_CHAR#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">5000</UC4RB_WRM_MAX_REP_CHARs.00>
-<UC4RB_WRM_OUTPUT_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_OUTPUT_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
-<UC4RB_WRM_RET_CODEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_RET_CODE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
+<UC4RB_WRM_RET_CODEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_RET_CODE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">0</UC4RB_WRM_RET_CODEs.00>
 <UC4RB_WRM_SCRIPT_FILEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_SCRIPT_FILE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS"/>
 <UC4RB_WRM_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS">0</UC4RB_WRM_TIMEOUTs.00>
 </PRPTBOX>
@@ -286,10 +277,10 @@
 <PROMPTSET name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS" ontop="1">
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS" prptmode="1">
 <UC4RB_WRM_HOSTs.00 altview="0" haslist="0"/>
-<UC4RB_WRM_DOMAINs.00 altview="0" haslist="0"/>
 <UC4RB_WRM_PORTs.00 altview="0" haslist="0">5985</UC4RB_WRM_PORTs.00>
 <UC4RB_WRM_USERNAMEs.00 altview="0" haslist="0"/>
 <UC4RB_WRM_PASSWORDs.00 altview="0" haslist="0">--10</UC4RB_WRM_PASSWORDs.00>
+<UC4RB_WRM_CONN_TIMEOUTs.00 altview="0" haslist="0">180</UC4RB_WRM_CONN_TIMEOUTs.00>
 <UC4RB_WRM_SSLs.00 altview="0" haslist="0">NO</UC4RB_WRM_SSLs.00>
 <UC4RB_WRM_MULTI_HOPs.00 altview="0" haslist="0">NO</UC4RB_WRM_MULTI_HOPs.00>
 <UC4RB_WRM_CN_CHECKs.00 altview="0" haslist="0">NO</UC4RB_WRM_CN_CHECKs.00>
@@ -302,11 +293,8 @@
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PRV.PROMPTSET.RUN_COMMANDS" prptmode="1">
 <UC4RB_WRM_COMMANDs.00 altview="0" haslist="0"/>
 <UC4RB_WRM_SCRIPT_FILEs.00 altview="0" haslist="0"/>
-<UC4RB_WRM_RET_CODEs.00 altview="0" haslist="0"/>
+<UC4RB_WRM_RET_CODEs.00 altview="0" haslist="0">0</UC4RB_WRM_RET_CODEs.00>
 <UC4RB_WRM_TIMEOUTs.00 altview="0" haslist="0">0</UC4RB_WRM_TIMEOUTs.00>
-<UC4RB_WRM_MAX_REP_CHARs.00 altview="0" haslist="0">5000</UC4RB_WRM_MAX_REP_CHARs.00>
-<UC4RB_WRM_OUTPUT_FILEs.00 altview="0" haslist="0"/>
-<UC4RB_WRM_ERROR_FILEs.00 altview="0" haslist="0"/>
 </PRPTBOX>
 </PROMPTSET>
 </node>
@@ -344,32 +332,38 @@
 PCK.AUTOMIC_MICROSOFT_WINRM.PUB.ACTION.RUN_COMMANDS
 
 = General description =
-This action runs provided commands/Script File on the remote server. You can provide multiple commands separated by a comma.
+This action runs provided commands/Script File on the remote server. You can provide multiple commands separated by a semicolon ( ; ).
+
+= Note =
+*  If you want to continue execution besides one or more commands execution failed. Pass below command in the script.
+    $ErrorActionPreference = 'SilentlyContinue'
+    E.g. 
+    $ErrorActionPreference = 'SilentlyContinue'
+   ipconfig; invalidcommand; DIR
+
+*  If "Return Code" input is empty, No check is performed on last executed command return value.
 
 = Failure Conditions =
 * If an invalid command(s) is provided.
 * Provided Script file is not a PowerShell script file.
 
 = Inputs =
-- Command              : Provide command you want to run on the remote machine. Multiple commands should be split by a semicolon ( ; ). Required if you do not specify Script File (Conditional Field)                                                                              
-- Script File               : Provide the name of the script file with the full path which will be executed on the remote machine. The script must reside on the local computer or in a directory that the local computer can access. E.g. C:\script\environment.ps1 (Conditional Field)   
-- Return Code	         : Provide expected return code. It will be compared with command exit code. If they don't match action fails. If empty no check is performed. (Optional Field)   
-- Timeout                  : Timeout duration for running this command. Use 0 for unlimited time. (Optional Field)   
-- Report Max Size    : Maximum number of characters of the output to write in the Job Report. (Optional Field)   
-- Output File Path     : Full path where output file will be written. E.g. C:\logs\run-commands-INFO.log   (Optional Field)                                                                                 
-- Error File Path        : Full path where error file will be written. E.g. C:\logs\run-commands-ERROR.log (Optional Field)   
+- Commands                   : Provide command you want to run on the remote machine. Multiple commands should be split by a semicolon ( ; ). Required if you do not specify Script File (Conditional Field)                                                                              
+- Command File Path     : Provide the name of the script file with the full path which will be executed on the remote machine. The script must reside on the local computer or in a directory that the local computer can access. E.g. C:\script\environment.ps1 (Conditional Field)   
+- Return Code	               : Provide expected return code. It will be compared with command exit code. If they don't match action fails. If empty no check is performed. (Optional Field)   
+- Timeout                        : Timeout duration for running this command. Use 0 for unlimited time. (Optional Field)   
+ 
 
 = Conditional Field =
 Provide one of these input Commands or Script File.
 
 = Behavior =
-* The  Output File Path and Error File Path are the absolute paths of the files on the Agent OS.
 * Execute the commands in the same way as specified in the user input. If someone set a variable and want to use in the subsequent command. It should be available there as well.
 * We simply open remote PowerShell session to the target machine and forward all the commands to the target machine. Just like someone manually run all the commands on to target machine.
 * The action's return code will be code returned by last executed command in case there are multiple commands.
 
 =Return Value=
-(none)
+UC4RB_WRM_RETURN_CODE#      : Return code of the last executed command.
 
 = Outputs =
 * Return code is 0 in case of success.

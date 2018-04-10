@@ -15,13 +15,6 @@
 :  PUT_PROMPT_BUFFER UC4RB_DIR_FILE_RM_NAME# = &UC4RB_COMMAND_FILE_PATH#
 :  SET &OBJECT# = "PCK.AUTOMIC_FILESYSTEM.PUB.ACTION.DELETE"
 :  SET &ACTOBJ# = ACTIVATE_UC_OBJECT(&OBJECT#,WAIT)
-:  SET &STATUS# = GET_UC_OBJECT_STATUS(,&ACTOBJ#,"RETCODE")
-:  P "EXECUTED OBJECT [&OBJECT#] STATUS: &STATUS#"
-:  IF &STATUS# <> "0"
-:    STOP MSG, 50, "Error while executing &OBJECT# object"
-:  ELSE
-:  P "File &UC4RB_COMMAND_FILE_PATH# deleted successfully."
-:  ENDIF
 :  IF &ACTOBJ# = "0"
 :    SET &ERRNR# = SYS_LAST_ERR_NR()
 :    SET &ERRINS#  = SYS_LAST_ERR_INS()
@@ -29,8 +22,15 @@
 :    PRINT "Error while activating object :&MESSAGE#"
 :    STOP MSG, 50, "Error while activating &OBJECT# object :&MESSAGE#"
 :  ENDIF
-: ENDIF
-]]></MSCRI>
+:  P "Run number(&OBJECT#) of the activated object."
+:  SET &STATUS# = GET_UC_OBJECT_STATUS(,&ACTOBJ#,"RETCODE")
+:  P "EXECUTED OBJECT [&OBJECT#] STATUS: &STATUS#"
+:  IF &STATUS# <> "0"
+:    STOP MSG, 50, "Error while executing &OBJECT# object"
+:  ELSE
+:  P "File &UC4RB_COMMAND_FILE_PATH# deleted successfully."
+:  ENDIF
+: ENDIF]]></MSCRI>
 </SCRIPT>
 <DOCU_Docu state="1" type="text">
 <DOC/>
