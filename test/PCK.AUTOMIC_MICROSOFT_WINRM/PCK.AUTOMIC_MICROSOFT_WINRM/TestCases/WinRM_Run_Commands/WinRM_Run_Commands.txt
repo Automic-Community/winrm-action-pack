@@ -11,31 +11,34 @@ Resource          ../../Resources/keywords.txt
 Resource          ../../Resources/variables.txt
 Resource          ../../Resources/actions.txt
 
-*** Test Cases ***    OK_NOK    Commands          CommandFilePath        ReturnCode                Timeout       ReportMaxSize         OutputFilePath
+*** Test Cases ***    OK_NOK    Commands          CommandFilePath        ReturnCode                Timeout
 WinRM Run single Command with values in all fields
                       [Tags]    main_scenarios
-                      OK        ${Commands}       ${Empty}               ${Expected_ReturnCode}    ${Timeout}    ${Report_Max_Size}    ${Output_FilePath}
+                      OK        ${Commands}       ${Empty}               ${Expected_ReturnCode}    ${Timeout}
 
 valid Test to run WinRM commands with valid commands seprated by semicolon
-                      OK        pwd;ipconfig      ${Empty}               ${Expected_ReturnCode}    ${Timeout}    ${Report_Max_Size}    ${Output_FilePath}
+                      OK        pwd;ipconfig      ${Empty}               ${Expected_ReturnCode}    ${Timeout}
 
-valid Test to run WinRM commands with valid commands and optional field left blank Output File Path and Return Code
-                      OK        pwd;ipconfig      ${Empty}               ${Empty}                  ${Timeout}    ${Report_Max_Size}    ${Empty}
+valid Test to run WinRM commands with valid commands and optional field left blank
+                      OK        pwd;ipconfig      ${Empty}               ${Empty}                  ${Timeout}
 
 valid Test to run WinRM commands using commands written in file provided in command file path
-                      OK        ${Empty}          ${Command_FilePath}    ${Expected_ReturnCode}    ${Timeout}    ${Report_Max_Size}    ${Output_FilePath}
+                      OK        ${Empty}          ${Command_FilePath}    ${Expected_ReturnCode}    ${Timeout}
 
 Mandatory assertion Test for required command or Command file path to run WinRM commands
-                      NOK       ${Empty}          ${Empty}               ${Expected_ReturnCode}    ${Timeout}    ${Report_Max_Size}    ${Output_FilePath}
+                      NOK       ${Empty}          ${Empty}               ${Expected_ReturnCode}    ${Timeout}
 
 Invalid Test to run WinRM commands with invalid command file path
-                      NOK       ${Empty}          Invalid                ${Expected_ReturnCode}    ${Timeout}    ${Report_Max_Size}    ${Output_FilePath}
+                      NOK       ${Empty}          Invalid                ${Expected_ReturnCode}    ${Timeout}
 
 Invalid Test to run WinRM commands with invalid commands
-                      NOK       Invalid           ${Empty}               ${Expected_ReturnCode}    ${Timeout}    ${Report_Max_Size}    ${Output_FilePath}
+                      NOK       Invalid           ${Empty}               ${Expected_ReturnCode}    ${Timeout}
 
 Invalid Test to run WinRM commands with commands and command file path both is provided
-                      NOK       ${Commands}       ${Command_FilePath}    ${Expected_ReturnCode}    ${Timeout}    ${Report_Max_Size}    ${Output_FilePath}
+                      NOK       ${Commands}       ${Command_FilePath}    ${Expected_ReturnCode}    ${Timeout}
+
+Invalid Test for WinRM Run valid command with expected output diffrent from the return code.
+                      NOK       ${Commands}       ${Empty}               5                         ${Timeout}
 
 *** Keywords ***
 Startup
@@ -44,8 +47,7 @@ Startup
     Connect AE
 
 Run_Commands Template
-    [Arguments]    ${OK_NOK}    ${Commands}    ${CommandFilePath}    ${ReturnCode}    ${Timeout}    ${ReportMaxSize}
-    ...    ${OutputFilePath}
+    [Arguments]    ${OK_NOK}    ${Commands}    ${CommandFilePath}    ${ReturnCode}    ${Timeout}
     [Documentation]    This test runs provided commands on remote server.
     ...    _Precondition :- To run this test suit WinRM Run Commands action should be present.
     ...    -${OK_NOK}: Boolean value indicate if the action is ENDED_OK or ENDED_NOT_OK. Value of this variable should be OK or NOK.
@@ -53,8 +55,6 @@ Run_Commands Template
     ...    -${CommandFilePath} : This field specifies name of the script file with full path which will be executed on the remote machine. The provided file must be PowerShell script file.
     ...    -${ReturnCode}: This field Specifies expected return code. It will be compared with last executed command exit code. If they don't match action fails. If empty no check is performed. The default value is 0.
     ...    -${Timeout}: This field Specifies Timeout duration in second for running this command. Use 0 for unlimited time.
-    ...    -${ReportMaxSize}:This field Specifies path of the file to store the command output.
-    ...    -${OutputFilePath}: This field specifies path of the file to store the command output.
     Generate String
     Init Action    ${_RUN_COMMANDS_ACTION}
     Connect To WINRM
@@ -62,12 +62,8 @@ Run_Commands Template
     ...    &UC4RB_WRM_COMMAND#    ${Commands}
     Run Keyword If    '${CommandFilePath}' == 'Invalid'    Action Set    &UC4RB_WRM_SCRIPT_FILE#    ${Generated_Name}_${Time}    ELSE    Action Set
     ...    &UC4RB_WRM_SCRIPT_FILE#    ${CommandFilePath}
-    Run Keyword If    '${ReturnCode}' == 'Invalid'    Action Set    &UC4RB_WRM_RET_CODE#    ${Generated_Name}_${Time}    ELSE    Action Set
-    ...    &UC4RB_WRM_RET_CODE#    ${ReturnCode}
+    Action Set    &UC4RB_WRM_RET_CODE#    ${ReturnCode}
     Action Set    &UC4RB_WRM_TIMEOUT#    ${Timeout}
-    Action Set    &UC4RB_WRM_MAX_REP_CHAR#    ${ReportMaxSize}
-    Run Keyword If    '${OutputFilePath}' == 'Invalid'    Action Set    &UC4RB_WRM_OUTPUT_FILE#    ${Generated_Name}_${Time}    ELSE    Action Set
-    ...    &UC4RB_WRM_OUTPUT_FILE#    ${OutputFilePath}
     Set Overwrite Agent
     Action Execute
     Run Keyword If    '${OK_NOK}' == 'OK'    Assert Success    ELSE IF    '${OK_NOK}' == 'NOK'    Assert Failure

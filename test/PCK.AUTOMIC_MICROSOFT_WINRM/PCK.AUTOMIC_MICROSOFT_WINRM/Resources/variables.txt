@@ -6,16 +6,15 @@ Resource          ../../../Env/default.txt
 #----Global Variables---------------------------------------------------------------------------------------
 ${Host_Name}      vviespartan03.sbb01.spoc.global
 ${Port}           5986
-${Username}       sbb01\USERNAME
+${Username}       SBB01\\EXTSKU
 ${Password}       ADD PASSWORD HERE
+${Connection_Timeout}    180
 ${Enable_Multi_Hop}    NO
 ${Skip_CA_Check}    NO
 ${Skip_CN_Check}    NO
 ${Use_SSL}        YES
 #----Run Commands----------------
 ${Commands}       pwd
-${Command_FilePath}    C:\\script.txt
+${Command_FilePath}    C:\\cmd.ps1
 ${Expected_ReturnCode}    0
 ${Timeout}        0
-${Report_Max_Size}    64
-${Output_FilePath}    C:\\output.txt
