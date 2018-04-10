@@ -126,7 +126,7 @@
 : ENDIF
 
 : IF &FLAG# EQ  2 OR 0
-:   STOP MSG, 50, "Either provide Command or Script file for execution"
+:   STOP MSG, 50, "Either provide Commands or Command File Path for execution"
 : ENDIF
 
 
@@ -151,9 +151,7 @@
 : SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_TIMEOUT#
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
 
-
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
-
 
 Try{
 ! Creating Session with remote host and save session in $session powershell variable
@@ -164,7 +162,6 @@ Try{
 
 !    Session advance option commandlet
 :    P  "Advance session option commandlet: &UC4RB_WRM_PSO_CMDLET#"
-
 
 :    IF &FLAG# EQ 1
       &UC4RB_WRM_PSO_CMDLET#
@@ -199,12 +196,16 @@ Try{
 
              Invoke-Command -Session $session -FilePath $command_file
              $remoteLastExitCode = Invoke-Command -ScriptBlock { $lastExitCode} -Session $session
+             if (!$remoteLastExitCode){
+                $remoteLaststatus = Invoke-Command -ScriptBlock {$?} -Session $session
+                $remoteLastExitCode = If ($remoteLaststatus) {0} Else {1}
+              }
                Write-Host "UC4RB_WRM_RETURN_CODE::=$remoteLastExitCode"
 :             IF &UC4RB_WRM_RET_CODE# NE ""
                if ($remoteLastExitCode -ne &UC4RB_WRM_RET_CODE#){
                       Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
                       $errors = 1
-                      throw "Return Code did not match with executed command return code. Please check log file\Job Report for more information"
+                      throw "Return Code did not match with executed command return code."
                }
 :             ENDIF
                     Write-Host `nRemote Command executed successfully`n
