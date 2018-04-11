@@ -162,10 +162,7 @@ Try{
 
 !    Session advance option commandlet
 :    P  "Advance session option commandlet: &UC4RB_WRM_PSO_CMDLET#"
-
-:    IF &FLAG# EQ 1
       &UC4RB_WRM_PSO_CMDLET#
-:    ENDIF
 
 !    Creation session commandlet
 :    P "Creation session commandlet: &UC4RB_WRM_SESSION_CMDLET#"
@@ -183,12 +180,11 @@ Try{
 :   INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CREATE_FILE
 :   SET &TEMP_OPTION_VALUE# = &UC4RB_COMMAND_FILE_PATH#
 :   INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
-      $command_file = "&UC4RB_WRM_ESC_VALUE#"
 :   ELSE
 :     SET &TEMP_OPTION_VALUE# = &UC4RB_WRM_SCRIPT_FILE#
 :     INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
-      $command_file =  "&UC4RB_WRM_ESC_VALUE#"
 : ENDIF
+      $command_file =  "&UC4RB_WRM_ESC_VALUE#"
 :   PUBLISH &UC4RB_COMMAND_FILE_PATH#,,"TASK"
 
 ! --- Execute the remote command using script file ---
@@ -196,6 +192,7 @@ Try{
 
              Invoke-Command -Session $session -FilePath $command_file
              $remoteLastExitCode = Invoke-Command -ScriptBlock { $lastExitCode} -Session $session
+!            Latest version of powershell some command return nth as retun code E.g. pwd or ls
              if (!$remoteLastExitCode){
                 $remoteLaststatus = Invoke-Command -ScriptBlock {$?} -Session $session
                 $remoteLastExitCode = If ($remoteLaststatus) {0} Else {1}

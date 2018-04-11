@@ -31,7 +31,6 @@
 :      SET &UC4RB_WRM_SESSION_CMDLET# = STR_CAT(&UC4RB_WRM_SESSION_CMDLET#, ' -Port "&UC4RB_WRM_PORT#"')
 :    ENDIF
 
-
 !    Credential
 :    SET &UC4RB_WRM_SESSION_CMDLET# = STR_CAT(&UC4RB_WRM_SESSION_CMDLET#, " -Credential $credential")
 
@@ -40,10 +39,9 @@
 :        SET &UC4RB_WRM_SESSION_CMDLET# = STR_CAT(&UC4RB_WRM_SESSION_CMDLET#, " -UseSSL")
 :    ENDIF
 
-
-!    Enable Multi-Hop (CredSSP)
-:    IF &UC4RB_WRM_MULTI_HOP# EQ "YES"
-:      SET &UC4RB_WRM_SESSION_CMDLET# = STR_CAT(&UC4RB_WRM_SESSION_CMDLET#, " -Authentication CredSSP")
+!    Authentication Type
+:    IF &UC4RB_WRM_AUTH_TYPE# NE ""
+:      SET &UC4RB_WRM_SESSION_CMDLET# = STR_CAT(&UC4RB_WRM_SESSION_CMDLET#, " -Authentication  &UC4RB_WRM_AUTH_TYPE# ")
 :    ENDIF
 
 !    Skip CA Check

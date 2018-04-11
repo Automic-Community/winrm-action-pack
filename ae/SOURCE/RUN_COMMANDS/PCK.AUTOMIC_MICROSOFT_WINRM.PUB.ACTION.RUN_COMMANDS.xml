@@ -56,11 +56,11 @@
 <node content="1" id="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS" name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS" parent="PPRPTS" type="PPROMPTSET">
 <PROMPTSET name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
+<UC4RB_WRM_AUTH_TYPEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_AUTH_TYPE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
 <UC4RB_WRM_CA_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CA_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CA_CHECKs.00>
 <UC4RB_WRM_CN_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CN_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CN_CHECKs.00>
 <UC4RB_WRM_CONN_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CONN_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">180</UC4RB_WRM_CONN_TIMEOUTs.00>
 <UC4RB_WRM_HOSTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_HOST#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
-<UC4RB_WRM_MULTI_HOPs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MULTI_HOP#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_MULTI_HOPs.00>
 <UC4RB_WRM_PASSWORDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PASSWORD#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">--10</UC4RB_WRM_PASSWORDs.00>
 <UC4RB_WRM_PORTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PORT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">5985</UC4RB_WRM_PORTs.00>
 <UC4RB_WRM_SSLs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_SSL#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_SSLs.00>
@@ -129,11 +129,11 @@
 <node content="1" id="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS" name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS" parent="PPRPTS" type="PPROMPTSET">
 <PROMPTSET name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
+<UC4RB_WRM_AUTH_TYPEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_AUTH_TYPE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
 <UC4RB_WRM_CA_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CA_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CA_CHECKs.00>
 <UC4RB_WRM_CN_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CN_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CN_CHECKs.00>
 <UC4RB_WRM_CONN_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CONN_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">180</UC4RB_WRM_CONN_TIMEOUTs.00>
 <UC4RB_WRM_HOSTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_HOST#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
-<UC4RB_WRM_MULTI_HOPs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MULTI_HOP#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_MULTI_HOPs.00>
 <UC4RB_WRM_PASSWORDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PASSWORD#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">--10</UC4RB_WRM_PASSWORDs.00>
 <UC4RB_WRM_PORTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PORT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">5985</UC4RB_WRM_PORTs.00>
 <UC4RB_WRM_SSLs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_SSL#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_SSLs.00>
@@ -188,11 +188,11 @@
 <node content="1" id="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS" name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS" parent="PPRPTS" type="PPROMPTSET">
 <PROMPTSET name="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
 <PRPTBOX promptset="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">
+<UC4RB_WRM_AUTH_TYPEs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_AUTH_TYPE#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
 <UC4RB_WRM_CA_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CA_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CA_CHECKs.00>
 <UC4RB_WRM_CN_CHECKs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CN_CHECK#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_CN_CHECKs.00>
 <UC4RB_WRM_CONN_TIMEOUTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_CONN_TIMEOUT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">180</UC4RB_WRM_CONN_TIMEOUTs.00>
 <UC4RB_WRM_HOSTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_HOST#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS"/>
-<UC4RB_WRM_MULTI_HOPs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_MULTI_HOP#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_MULTI_HOPs.00>
 <UC4RB_WRM_PASSWORDs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PASSWORD#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">--10</UC4RB_WRM_PASSWORDs.00>
 <UC4RB_WRM_PORTs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_PORT#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">5985</UC4RB_WRM_PORTs.00>
 <UC4RB_WRM_SSLs.00 ReadFromTable="OPUD" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_WRM_SSL#" promptsetname="PCK.AUTOMIC_MICROSOFT_WINRM.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_WRM_SSLs.00>
@@ -281,8 +281,8 @@
 <UC4RB_WRM_USERNAMEs.00 altview="0" haslist="0"/>
 <UC4RB_WRM_PASSWORDs.00 altview="0" haslist="0">--10</UC4RB_WRM_PASSWORDs.00>
 <UC4RB_WRM_CONN_TIMEOUTs.00 altview="0" haslist="0">180</UC4RB_WRM_CONN_TIMEOUTs.00>
+<UC4RB_WRM_AUTH_TYPEs.00 altview="0" haslist="0"/>
 <UC4RB_WRM_SSLs.00 altview="0" haslist="0">NO</UC4RB_WRM_SSLs.00>
-<UC4RB_WRM_MULTI_HOPs.00 altview="0" haslist="0">NO</UC4RB_WRM_MULTI_HOPs.00>
 <UC4RB_WRM_CN_CHECKs.00 altview="0" haslist="0">NO</UC4RB_WRM_CN_CHECKs.00>
 <UC4RB_WRM_CA_CHECKs.00 altview="0" haslist="0">NO</UC4RB_WRM_CA_CHECKs.00>
 </PRPTBOX>
@@ -361,6 +361,7 @@ Provide one of these input Commands or Script File.
 * Execute the commands in the same way as specified in the user input. If someone set a variable and want to use in the subsequent command. It should be available there as well.
 * We simply open remote PowerShell session to the target machine and forward all the commands to the target machine. Just like someone manually run all the commands on to target machine.
 * The action's return code will be code returned by last executed command in case there are multiple commands.
+*  If one of command form provided commands failed during execution, action will fail. 
 
 =Return Value=
 UC4RB_WRM_RETURN_CODE#      : Return code of the last executed command.
