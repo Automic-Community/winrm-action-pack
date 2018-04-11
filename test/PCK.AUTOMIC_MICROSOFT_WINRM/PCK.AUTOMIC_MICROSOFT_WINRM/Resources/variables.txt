@@ -9,7 +9,7 @@ ${Port}           5986
 ${Username}       SBB01\\EXTSKU
 ${Password}       ADD PASSWORD HERE
 ${Connection_Timeout}    180
-${Enable_Multi_Hop}    NO
+${Auth_Type}      ${Empty}
 ${Skip_CA_Check}    NO
 ${Skip_CN_Check}    NO
 ${Use_SSL}        YES
