@@ -348,14 +348,14 @@ This action runs provided commands/Script File on the remote server. You can pro
 * Provided Script file is not a PowerShell script file.
 
 = Inputs =
-- Commands                   : Provide command you want to run on the remote machine. Multiple commands should be split by a semicolon ( ; ). Required if you do not specify Script File (Conditional Field)                                                                              
-- Command File Path     : Provide the name of the script file with the full path which will be executed on the remote machine. The script must reside on the local computer or in a directory that the local computer can access. E.g. C:\script\environment.ps1 (Conditional Field)   
-- Return Code	               : Provide expected return code. It will be compared with command exit code. If they don't match action fails. If empty no check is performed. (Optional Field)   
-- Timeout                        : Timeout duration for running this command. Use 0 for unlimited time. (Optional Field)   
+- Commands                   : Provide command you want to run on the remote machine. Multiple commands should be split by a semicolon ( ; ). Required if you do not specify Script File   
+- Command File Path     : Provide the name of the script file with the full path which will be executed on the remote machine. The script must reside on the local computer or in a directory that the local computer can access. E.g. C:\script\environment.ps1 
+- Return Code	               : Provide expected return code. It will be compared with command exit code. If they don't match action fails. If empty no check is performed.
+- Timeout                        : Timeout duration for running this command. Use 0 for unlimited time.
  
 
 = Conditional Field =
-Provide one of these input Commands or Script File.
+Provide one of these input Commands or Command File Path.
 
 = Behavior =
 * Execute the commands in the same way as specified in the user input. If someone set a variable and want to use in the subsequent command. It should be available there as well.
