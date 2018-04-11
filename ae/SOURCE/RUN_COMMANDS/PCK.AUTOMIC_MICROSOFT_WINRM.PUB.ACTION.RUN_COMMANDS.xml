@@ -341,6 +341,10 @@ This action runs provided commands/Script File on the remote server. You can pro
     $ErrorActionPreference = 'SilentlyContinue'
    ipconfig; invalidcommand; DIR
 
+* If you want to override   $ErrorActionPreference = 'SilentlyContinue'  behaviour . you can use
+
+  $ErrorActionPreference = 'Stop' 
+
 *  If "Return Code" input is empty, No check is performed on last executed command return value.
 
 = Failure Conditions =
@@ -349,7 +353,7 @@ This action runs provided commands/Script File on the remote server. You can pro
 
 = Inputs =
 - Commands:               Provide command you want to run on the remote machine. Multiple commands should be split by a semicolon ( ; ). For more info please check example section of action documentation.  E.g. ipconfig
-- Command File Path:  Provide the name of the script file with the full path which will be executed on the remote machine. The script must reside on the local computer or in a directory that the local computer can access. E.g. C:\script\environment.ps1 
+- Command File Path:  Provide the name of the script file with the full path which will be executed on the remote machine. The script must reside on the agent machine or in a directory that the agent can access. E.g. C:\script\environment.ps1 
 - Return Code:             Provide expected return code. It will be compared with command exit code. If they don't match action fails. If empty no check is performed. E.g. 3
 - Timeout:                    Timeout duration for running this command. Use 0 for unlimited time.
  
@@ -361,7 +365,7 @@ Provide one of these input Commands or Command File Path.
 * Execute the commands in the same way as specified in the user input. If someone set a variable and want to use in the subsequent command. It should be available there as well.
 * We simply open remote PowerShell session to the target machine and forward all the commands to the target machine. Just like someone manually run all the commands on to target machine.
 * The action's return code will be code returned by last executed command in case there are multiple commands.
-*  If one of command from provided commands failed during execution, action will fail. 
+*  If one of command from provided commands failed during execution, action will fail. If you still want to continue execution use  $ErrorActionPreference = 'SilentlyContinue'. For more information refer note section of the documentation.
 
 =Return Value=
 UC4RB_WRM_RETURN_CODE#      : Return code of the last executed command.
@@ -384,7 +388,39 @@ AE logs will be displayed in the AE report.
 3. Multiple commands can also be executed as (newline separated):
                 Commands: hostname
                                      pwd
-]]></DOC>
+4. Use of  $ErrorActionPreference = 'SilentlyContinue' and  $ErrorActionPreference = 'Stop'
+
+ipconfig
+ $ErrorActionPreference = 'SilentlyContinue'
+ # invalid command : execution still be continue
+ xyz
+$state=$?
+ 
+ if ( !$state){
+    Write-Host "Error during script execution.............."
+	$ErrorActionPreference = 'Stop'
+	
+}
+ # invalid command: execution will be stopped here
+ xyz
+cd C:\
+
+mkdir xyz
+
+5. Exit codes for PowerShell script:
+
+ Use the command Exit $LASTEXITCODE at the end of the PowerShell script to return the error codes from the PowerShell script.
+
+-  $LASTEXITCODE holds the last error code in the PowerShell script. It is in form of boolean values, with 0 for success and 1 for failure.
+ - Exit <custom error codes> will return custom return codes from the script
+Example:
+
+Powershell script for copying file to a folder 
+$dest ="C:est"
+New-Item $dest -type directory -force
+$source ="c:samplefile.txt"
+Copy-Item $source $dest
+exit $LASTEXITCODE]]></DOC>
 </DOCU_Docu>
 </JOBP>
 </uc-export>
