@@ -118,6 +118,6 @@ Connect To WINRM
     Action Set    &UC4RB_WRM_PASSWORD#    ${Password}
     Action Set    &UC4RB_WRM_CONN_TIMEOUT#    ${Connection_Timeout}
     Action set    &UC4RB_WRM_SSL#    ${Use_SSL}
-    Action Set    &UC4RB_WRM_MULTI_HOP#    ${Enable_Multi_Hop}
+    Action Set    &UC4RB_WRM_AUTH_TYPE#    ${Auth_Type}
     Action Set    &UC4RB_WRM_CN_CHECK#    ${Skip_CN_Check}
     Action Set    &UC4RB_WRM_CA_CHECK#    ${Skip_CA_Check}
