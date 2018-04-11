@@ -332,7 +332,7 @@
 PCK.AUTOMIC_MICROSOFT_WINRM.PUB.ACTION.RUN_COMMANDS
 
 = General description =
-This action runs provided commands/Script File on the remote server. You can provide multiple commands separated by a semicolon ( ; ).
+This action runs provided commands/Script File on the remote server. You can provide multiple commands separated by a semicolon ( ; ) or newline.
 
 = Note =
 *  If you want to continue execution besides one or more commands execution failed. Pass below command in the script.
