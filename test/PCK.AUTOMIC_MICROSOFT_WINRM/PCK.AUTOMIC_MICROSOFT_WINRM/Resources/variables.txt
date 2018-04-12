@@ -1,0 +1,20 @@
+*** Settings ***
+Resource          ../../../Env/default.txt
+
+*** Variables ***
+#---- Promptset Fields --------------------------------------------------------------------------------------
+#----Global Variables---------------------------------------------------------------------------------------
+${Host_Name}      vviespartan03.sbb01.spoc.global
+${Port}           5986
+${Username}       SBB01\\EXTSKU
+${Password}       ADD PASSWORD HERE
+${Connection_Timeout}    180
+${Auth_Type}      ${Empty}
+${Skip_CA_Check}    NO
+${Skip_CN_Check}    NO
+${Use_SSL}        YES
+#----Run Commands----------------
+${Commands}       pwd
+${Command_FilePath}    C:\\cmd.ps1
+${Expected_ReturnCode}    0
+${Timeout}        0
