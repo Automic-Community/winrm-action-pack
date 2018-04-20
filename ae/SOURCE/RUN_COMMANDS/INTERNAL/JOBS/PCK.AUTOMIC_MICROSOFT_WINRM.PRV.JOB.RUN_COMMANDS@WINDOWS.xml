@@ -193,16 +193,16 @@ Try{
 ! Validate Return Code
 : IF &UC4RB_WRM_RET_CODE# <> ""
    $cmdReturnCode = "&UC4RB_WRM_RET_CODE#"
-   $isValid = ($cmdReturnCode -match "^[\d]{1}[\d]*$") -or ($cmdReturnCode -match "^[\-]{1}[\d]+$")
+   $isValid = ($cmdReturnCode -match "^[\d]*$") -or ($cmdReturnCode -match "^[\-]{1}[\d]+$")
   if (!$isValid){
-      throw 'Invalid Return Code[&UC4RB_WRM_RET_CODE#] has been specified'
+      throw 'ERROR: Invalid Return Code[&UC4RB_WRM_RET_CODE#] has been specified.'
     }
 : ENDIF
 
 ! Check command file exist
   $fileExist = Test-Path  $command_file
   if(!$fileExist){
-     throw "Command file not exist. Command File: $command_file"
+     throw "ERROR: Command file not exist. Command File: $command_file"
   }
 !  Set the parameter to stop in order to terminate the script execution on error
 !   $ErrorActionPreference= 'Stop'
@@ -221,7 +221,7 @@ Try{
 :  P "Creation session commandlet: &UC4RB_WRM_SESSION_CMDLET#"
      $session = New-PSSession &UC4RB_WRM_SESSION_CMDLET#
  if(!$session){
-        throw "Unable to create session from remote Host"
+        throw "ERROR: Unable to create session from remote Host"
   }
 
 ! Specify file which contains commands/script block that needs to be executed.
@@ -250,7 +250,7 @@ Try{
   } -Argumentlist $content
 
 if(!$j){
-  throw "Invalid JOB Object"
+  throw "ERROR: Unable to execute commands."
 }
 
 !Wait for the job. Specify timeout here in seconds.
@@ -275,7 +275,7 @@ $null=remove-job $j -force
 !Result null means job is not completed with in provided timeframe.
 if ($result -eq $null)
 {
-  throw "Unable to execute command within specified time"
+  throw "ERROR: Command Execution timeout occured. Unable to execute the command within specified time."
 }
 
 ! Retrieve the status of last command/lastexit code as set previously.
@@ -285,7 +285,7 @@ if ($result -eq $null)
 :   IF &UC4RB_WRM_RET_CODE# NE ""
 
    if ($code -ne $cmdReturnCode){
-         throw "Expected Return Code input does not match with commands return code[$code]."
+         throw "ERROR: Expected Return Code input does not match with commands return code[$code]."
      }
 
 : ENDIF
@@ -294,8 +294,8 @@ if ($result -eq $null)
 
 }Catch {
    $errors = 1
-   Write-output "ERROR: $($error[0].Exception.Message)"
-
+   Write-output "ERROR : "
+   Write-output $error.Exception.Message
 }Finally {
 ! ----- Close the PSSession session -----
   if($session){
