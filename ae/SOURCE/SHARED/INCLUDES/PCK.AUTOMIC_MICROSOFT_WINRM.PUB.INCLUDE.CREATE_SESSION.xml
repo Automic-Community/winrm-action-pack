@@ -60,8 +60,6 @@
 
 :    SET &UC4RB_WRM_SESSION_CMDLET# = STR_CAT(&UC4RB_WRM_SESSION_CMDLET#, " -SessionOption $sessionOption")
 
-
-
 ! Initialize the error
 $errors = 0
 ! Load powershell utility
@@ -81,7 +79,14 @@ $secPwd = ConvertTo-SecureString "$UC4_DECRYPTED_PWD" -AsPlainText -Force
 :   P  "Credential commandlet: &UC4RB_WRM_CRED_CMDLET#"
 
 &UC4RB_WRM_CRED_CMDLET#
-]]></MSCRI>
+
+!    Session advance option commandlet
+:    P  "Advance session option commandlet: &UC4RB_WRM_PSO_CMDLET#"
+      &UC4RB_WRM_PSO_CMDLET#
+
+!    Creation session commandlet
+:    P "Creation session commandlet: &UC4RB_WRM_SESSION_CMDLET#"
+     &UC4RB_WRM_SESSION_CMDLET#]]></MSCRI>
 </SCRIPT>
 <DOCU_Docu state="1" type="text">
 <DOC><![CDATA[Create a session with the remote host using WinRM. ]]></DOC>

@@ -156,17 +156,7 @@
 Try{
 ! Creating Session with remote host and save session in $session powershell variable
 : INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CREATE_SESSION
-!    Timeout
-:     SET &TMP# = MULT(&UC4RB_WRM_TIMEOUT#, 1000)
-:      SET &UC4RB_WRM_PSO_CMDLET# = STR_CAT(&UC4RB_WRM_PSO_CMDLET#, " -OperationTimeout &TMP#")
 
-!    Session advance option commandlet
-:    P  "Advance session option commandlet: &UC4RB_WRM_PSO_CMDLET#"
-      &UC4RB_WRM_PSO_CMDLET#
-
-!    Creation session commandlet
-:    P "Creation session commandlet: &UC4RB_WRM_SESSION_CMDLET#"
-     &UC4RB_WRM_SESSION_CMDLET#
 
 :   SET &UC4RB_COMMAND_FILE_PATH# =""
 : IF &UC4RB_WRM_COMMAND# NE ""
@@ -187,25 +177,77 @@ Try{
       $command_file =  "&UC4RB_WRM_ESC_VALUE#"
 :   PUBLISH &UC4RB_COMMAND_FILE_PATH#,,"TASK"
 
-! --- Execute the remote command using script file ---
-          Write-Host `nExecuting command ..`n
+! Specify file which contains commands/script block that needs to be executed.
+$content=[system.io.file]::ReadAllText($command_file)
 
-             Invoke-Command -Session $session -FilePath $command_file
-             $remoteLastExitCode = Invoke-Command -ScriptBlock { $lastExitCode} -Session $session
-!            Latest version of powershell some command return nth as retun code E.g. pwd or ls
-             if (!$remoteLastExitCode){
-                $remoteLaststatus = Invoke-Command -ScriptBlock {$?} -Session $session
-                $remoteLastExitCode = If ($remoteLaststatus) {0} Else {1}
-              }
-               Write-Host "UC4RB_WRM_RETURN_CODE::=$remoteLastExitCode"
-:             IF &UC4RB_WRM_RET_CODE# NE ""
-               if ($remoteLastExitCode -ne &UC4RB_WRM_RET_CODE#){
-                      Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
-                      $errors = 1
-                      throw "Return Code did not match with executed command return code."
-               }
-:             ENDIF
-                    Write-Host `nRemote Command executed successfully`n
+!Execute the command on target system as script block and as job
+! Passing command file content as argument ..
+$j=Invoke-Command -Session $session -asjob -ScriptBlock {
+! Passing content as input ..
+  param ($content)
+! Creating temp file on remote m/c and putting input file content here. We can replace temp with job runid.
+  $temppath=[System.IO.Path]::GetTempPath()
+  $null=new-item -Path ($temppath+"temp_commands-&$RUNID#.ps1") -Value $content -force -itemtype file -EA silentlycontinue
+! execute powershell script
+  & ($temppath+"temp_commands-&$RUNID#.ps1")
+! Get and set the last command status
+  $lastexecstate=$?
+!! We may assume non existece of this variable means as passed so setting it to 0.
+!  if ($lastexitcode -eq $null)
+!  {
+!    $lastexitcode=0
+!  }
+! Store last exit code.
+  $temp=$lastexitcode
+! remove the temprary file as its been executed.
+  $null=remove-item ($temppath+"temp_commands-&$RUNID#.ps1") -force
+} -Argumentlist $content
+
+
+!Wait for the job. Specify timeout here in seconds.
+: IF &UC4RB_WRM_TIMEOUT# EQ 0
+    $result=wait-job $j -timeout -1 -ErrorAction continue
+:  ELSE
+    $result=wait-job $j -timeout &UC4RB_WRM_TIMEOUT# -ErrorAction continue
+: ENDIF
+
+
+!Stop the job.
+$null=stop-job -job $j -ErrorAction continue
+
+!Recieve output.
+receive-job $j -ErrorAction continue
+
+!Remove the job
+$null=remove-job $j -force -ErrorAction continue
+
+!Result null means job is not completed with in provided timeframe.
+if ($result -eq $null)
+{
+  throw "Timeout occured. Job is taking longer than provided timeout value."
+}
+else
+{
+! Retrieve the status of last command/lastexit code as set previously.
+  $code=Invoke-Command -Session $session -ScriptBlock { $temp }
+  $lastexecstate=Invoke-Command -Session $session -ScriptBlock { $lastexecstate }
+  write-output `n"Last Executed Command Return Code: $code"`n
+  write-output  "Last Executed Command State:$lastexecstate"
+}
+
+! Comparing provided Return Code with command return code
+:   IF &UC4RB_WRM_RET_CODE# NE ""
+
+   if ($code -ne &UC4RB_WRM_RET_CODE#){
+          Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
+          $errors = 1
+          throw "Return Code did not match with executed command return code."
+     }
+
+: ENDIF
+
+ Write-Host `nRemote Command executed successfully`n
+ Write-Host "UC4RB_WRM_RETURN_CODE::=$code"
 
 }Catch {
    $errors = 1
