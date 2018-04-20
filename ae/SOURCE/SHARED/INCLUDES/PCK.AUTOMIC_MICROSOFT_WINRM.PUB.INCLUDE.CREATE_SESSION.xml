@@ -7,19 +7,16 @@
 <OH_SubType/>
 </HEADER>
 <SCRIPT mode="1" state="1">
-<MSCRI><![CDATA[
-
-
-:SET &UC4RB_WRM_CRED_CMDLET# = "$credential = New-Object System.Management.Automation.PSCredential( "
+<MSCRI><![CDATA[:    SET &UC4RB_WRM_CRED_CMDLET# = "$credential = New-Object System.Management.Automation.PSCredential( "
 
 !    Username
 :    INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE "&TEMP_OPTION_VALUE#" = "&UC4RB_WRM_USERNAME#"
-:    SET &UC4RB_WRM_CRED_CMDLET# = STR_CAT(&UC4RB_WRM_CRED_CMDLET#, '"&UC4RB_WRM_ESC_VALUE#", $secPwd)')
+:    SET &UC4RB_WRM_CRED_CMDLET# = STR_CAT(&UC4RB_WRM_CRED_CMDLET#, "'&UC4RB_WRM_ESC_VALUE#', $secPwd)")
 
 
 ! --- Create a PSCredential Object containing the username and password ---
-:    SET &UC4RB_WRM_SESSION_CMDLET# = "$session = New-PSSession"
-:    SET &UC4RB_WRM_PSO_CMDLET# = "$sessionOption = New-PSSessionOption"
+:    SET &UC4RB_WRM_SESSION_CMDLET# = ""
+:    SET &UC4RB_WRM_PSO_CMDLET# = ""
 
 !    Buidling Connect command
 !    Host name
@@ -60,27 +57,6 @@
 
 :    SET &UC4RB_WRM_SESSION_CMDLET# = STR_CAT(&UC4RB_WRM_SESSION_CMDLET#, " -SessionOption $sessionOption")
 
-
-
-! Initialize the error
-$errors = 0
-! Load powershell utility
-: INC PCK.ITPA_SHARED.PUB.INCLUDE.POWERSHELL_UTILITY
-!   Set the parameter to stop in order to terminate the script execution on error
-$ErrorActionPreference= 'Stop'
-!   To ignore DisplayDeprecationWarnings
-$WarningPreference= 'SilentlyContinue'
-! --- Create a PSCredential Object containing the username and password ---
-!    DECRYPT PASSWORD
-:   INC PCK.ITPA_SHARED.PUB.INCLUDE.ATTACH
-:   SET &UC4RB_ENCRYPTED_PASSWORD_TMP# = &UC4RB_WRM_PASSWORD#
-:   INC PCK.ITPA_SHARED.PRV.INCLUDE.DECRYPT_PASSWORD
-! Securing password
-$secPwd = ConvertTo-SecureString "$UC4_DECRYPTED_PWD" -AsPlainText -Force
-! Genearting credential using username and password
-:   P  "Credential commandlet: &UC4RB_WRM_CRED_CMDLET#"
-
-&UC4RB_WRM_CRED_CMDLET#
 ]]></MSCRI>
 </SCRIPT>
 <DOCU_Docu state="1" type="text">

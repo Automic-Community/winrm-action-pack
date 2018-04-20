@@ -27,12 +27,12 @@
 <ExtRepNone>0</ExtRepNone>
 <AutoDeactNo>0</AutoDeactNo>
 <AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
-<AutoDeactErrorFree>0</AutoDeactErrorFree>
-<DeactWhen/>
+<AutoDeactErrorFree>1</AutoDeactErrorFree>
+<DeactWhen>ANY_OK</DeactWhen>
 <DeactDelay>0</DeactDelay>
-<AutoDeactAlways>1</AutoDeactAlways>
+<AutoDeactAlways>0</AutoDeactAlways>
 <AttDialog>0</AttDialog>
-<ActAtRun>0</ActAtRun>
+<ActAtRun>1</ActAtRun>
 <Consumption>0</Consumption>
 <UC4Priority>0</UC4Priority>
 <MaxParallel2>0</MaxParallel2>
@@ -115,7 +115,12 @@
 <PSCRI><![CDATA[:INC PCK.ITPA_SHARED.PUB.INCLUDE.START_STOP_JOB_ACCORDING_TO_AGENT_OS]]></PSCRI>
 </PRE_SCRIPT>
 <SCRIPT mode="1" state="1">
-<MSCRI><![CDATA[!------------------------------------  Validation of Parameters Command/Script File-----------------------------------------------------------------------------------------------
+<MSCRI><![CDATA[! Load powershell utility
+: INC PCK.ITPA_SHARED.PUB.INCLUDE.POWERSHELL_UTILITY
+
+! Initialize the error
+$errors = 0
+!------------------------------------  Validation of Parameters Command/Script File-----------------------------------------------------------------------------------------------
 : SET &FLAG# = 0
 : IF &UC4RB_WRM_COMMAND# NE ""
 :       SET &FLAG# = &FLAG# + 1
@@ -135,14 +140,13 @@
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.PARAM_VALIDATION
 : INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.LOGGING_CONNECTION_DETAILS
 
-
 !Script File
 : SET &UC4RB_LOGGING_PARAMETER# = "Command File Path"
 : SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_SCRIPT_FILE#
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
 
 !Return Code
-: SET &UC4RB_LOGGING_PARAMETER# = "Return Code"
+: SET &UC4RB_LOGGING_PARAMETER# = "Expected Return Code"
 : SET &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_WRM_RET_CODE#
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
 
@@ -153,26 +157,12 @@
 
 : INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
 
-Try{
-! Creating Session with remote host and save session in $session powershell variable
-: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CREATE_SESSION
-!    Timeout
-:     SET &TMP# = MULT(&UC4RB_WRM_TIMEOUT#, 1000)
-:      SET &UC4RB_WRM_PSO_CMDLET# = STR_CAT(&UC4RB_WRM_PSO_CMDLET#, " -OperationTimeout &TMP#")
+! Create command File
 
-!    Session advance option commandlet
-:    P  "Advance session option commandlet: &UC4RB_WRM_PSO_CMDLET#"
-      &UC4RB_WRM_PSO_CMDLET#
-
-!    Creation session commandlet
-:    P "Creation session commandlet: &UC4RB_WRM_SESSION_CMDLET#"
-     &UC4RB_WRM_SESSION_CMDLET#
-
-:   SET &UC4RB_COMMAND_FILE_PATH# =""
-: IF &UC4RB_WRM_COMMAND# NE ""
-!   Get File path
-:   SET &AGENT_TEMPDIR# = GET_VAR('UC_EX_PATH_TEMP', &AGENT#)
-!   Baseline File
+:   IF &UC4RB_WRM_COMMAND# NE ""
+!     Get File path
+:     SET &AGENT_TEMPDIR# = GET_VAR('UC_EX_PATH_TEMP', &AGENT#)
+!     Baseline File
 :   SET &UC4RB_COMMAND_FILE_PATH# = STR_CAT(&AGENT_TEMPDIR#,"commands-&$RUNID#.ps1")
 :   SET &UC4RB_FILE_CONTENT# = &UC4RB_WRM_COMMAND#
 !   Creating file in the temp dir
@@ -184,38 +174,133 @@ Try{
 :     SET &TEMP_OPTION_VALUE# = &UC4RB_WRM_SCRIPT_FILE#
 :     INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.ESCAPE_ARG_VALUE
 : ENDIF
-      $command_file =  "&UC4RB_WRM_ESC_VALUE#"
-:   PUBLISH &UC4RB_COMMAND_FILE_PATH#,,"TASK"
+      $command_file =  '&UC4RB_WRM_ESC_VALUE#'
+: SET &UC4RB_TEMP_COMMAND_FILE# = &UC4RB_WRM_ESC_VALUE#
+: PUBLISH &UC4RB_TEMP_COMMAND_FILE#,,"TASK"
 
-! --- Execute the remote command using script file ---
-          Write-Host `nExecuting command ..`n
+! Creating Session with remote host and save session in $session powershell variable
+: INC PCK.AUTOMIC_MICROSOFT_WINRM.PUB.INCLUDE.CREATE_SESSION
 
-             Invoke-Command -Session $session -FilePath $command_file
-             $remoteLastExitCode = Invoke-Command -ScriptBlock { $lastExitCode} -Session $session
-!            Latest version of powershell some command return nth as retun code E.g. pwd or ls
-             if (!$remoteLastExitCode){
-                $remoteLaststatus = Invoke-Command -ScriptBlock {$?} -Session $session
-                $remoteLastExitCode = If ($remoteLaststatus) {0} Else {1}
-              }
-               Write-Host "UC4RB_WRM_RETURN_CODE::=$remoteLastExitCode"
-:             IF &UC4RB_WRM_RET_CODE# NE ""
-               if ($remoteLastExitCode -ne &UC4RB_WRM_RET_CODE#){
-                      Write-Host `nThe remote command exited with error code: $remoteLastExitCode`n
-                      $errors = 1
-                      throw "Return Code did not match with executed command return code."
-               }
-:             ENDIF
-                    Write-Host `nRemote Command executed successfully`n
+! --- Create a PSCredential Object containing the username and password ---
+!    DECRYPT PASSWORD
+:   INC PCK.ITPA_SHARED.PUB.INCLUDE.ATTACH
+:   SET &UC4RB_ENCRYPTED_PASSWORD_TMP# = &UC4RB_WRM_PASSWORD#
+:   INC PCK.ITPA_SHARED.PRV.INCLUDE.DECRYPT_PASSWORD
+
+
+Try{
+
+! Validate Return Code
+: IF &UC4RB_WRM_RET_CODE# <> ""
+   $cmdReturnCode = "&UC4RB_WRM_RET_CODE#"
+   $isValid = ($cmdReturnCode -match "^[\d]*$") -or ($cmdReturnCode -match "^[\-]{1}[\d]+$")
+  if (!$isValid){
+      throw 'ERROR: Invalid Return Code[&UC4RB_WRM_RET_CODE#] has been specified.'
+    }
+: ENDIF
+
+! Check command file exist
+  $fileExist = Test-Path  $command_file
+  if(!$fileExist){
+     throw "ERROR: Command file not exist. Command File: $command_file"
+  }
+!  Set the parameter to stop in order to terminate the script execution on error
+!   $ErrorActionPreference= 'Stop'
+
+! Securing password
+  $secPwd = ConvertTo-SecureString "$UC4_DECRYPTED_PWD" -AsPlainText -Force
+! Genearting credential using username and password
+: P "Credential commandlet: &UC4RB_WRM_CRED_CMDLET#"
+       &UC4RB_WRM_CRED_CMDLET#
+
+!    Session advance option commandlet
+: P "Advance session option commandlet: &UC4RB_WRM_PSO_CMDLET#"
+    $sessionOption = New-PSSessionOption &UC4RB_WRM_PSO_CMDLET#
+
+!    Creation session commandlet
+:  P "Creation session commandlet: &UC4RB_WRM_SESSION_CMDLET#"
+     $session = New-PSSession &UC4RB_WRM_SESSION_CMDLET#
+ if(!$session){
+        throw "ERROR: Unable to create session from remote Host"
+  }
+
+! Specify file which contains commands/script block that needs to be executed.
+  $content=[system.io.file]::ReadAllText($command_file)
+
+!Execute the command on target system as script block and as job
+!   Passing command file content as argument ..
+    $j=Invoke-Command -Session $session -asjob -ScriptBlock {
+!   Passing content as input ..
+    param ($content)
+!   Creating temp file on remote m/c and putting input file content here. We can replace temp with job runid.
+    $temppath=[System.IO.Path]::GetTempPath()
+    $null=new-item -Path ($temppath+"temp_commands-&$RUNID#.ps1") -Value $content -force -itemtype file
+!   execute powershell script
+    & ($temppath+"temp_commands-&$RUNID#.ps1") 2>&1
+
+!   We may assume non existece of this variable means as passed so setting it to 0.
+    if ($lastexitcode -eq $null)
+    {
+    $lastexitcode=0
+    }
+!   Store last exit code.
+    $temp=$lastexitcode
+!   remove the temprary file as its been executed.
+    $null=remove-item ($temppath+"temp_commands-&$RUNID#.ps1") -force
+  } -Argumentlist $content
+
+if(!$j){
+  throw "ERROR: Unable to execute commands."
+}
+
+!Wait for the job. Specify timeout here in seconds.
+: IF &UC4RB_WRM_TIMEOUT# EQ 0
+    $result=wait-job $j
+:  ELSE
+    $result=wait-job $j -timeout &UC4RB_WRM_TIMEOUT#
+: ENDIF
+
+
+!Stop the job.
+$null=stop-job -job $j
+
+
+write-output `n"******* Command execution output start here *******"
+!Recieve output.
+receive-job $j
+write-output `n"******* Command execution end here *******"
+!Remove the job
+$null=remove-job $j -force
+
+!Result null means job is not completed with in provided timeframe.
+if ($result -eq $null)
+{
+  throw "ERROR: Command Execution timeout occured. Unable to execute the command within specified time."
+}
+
+! Retrieve the status of last command/lastexit code as set previously.
+  $code=Invoke-Command -Session $session -ScriptBlock { $temp }
+
+! Comparing provided Return Code with command return code
+:   IF &UC4RB_WRM_RET_CODE# NE ""
+
+   if ($code -ne $cmdReturnCode){
+         throw "ERROR: Expected Return Code input does not match with commands return code[$code]."
+     }
+
+: ENDIF
+
+ Write-output "UC4RB_WRM_RETURN_CODE::=$code"
 
 }Catch {
    $errors = 1
-   Write-Host 'ERROR:' $($error[0].Exception.Message)
-
+   Write-output "ERROR : "
+   Write-output $error.Exception.Message
 }Finally {
 ! ----- Close the PSSession session -----
   if($session){
     Remove-PSSession -Session $session
-    Write-Host `nRemote Session with host &UC4RB_WRM_HOST# closed successfully ..........`n
+    Write-output "Remote Session with host &UC4RB_WRM_HOST# closed successfully .........."
   }
 }
 
