@@ -12,7 +12,7 @@
 :  PUT_PROMPT_BUFFER AGENT# = &AGENT#
 :  PUT_PROMPT_BUFFER LOGIN# = &LOGIN#
 :  PUT_PROMPT_BUFFER  UC4RB_DIR_FILE_RM_FAIL# = "YES"
-:  PUT_PROMPT_BUFFER UC4RB_DIR_FILE_RM_NAME# = &UC4RB_COMMAND_FILE_PATH#
+:  PUT_PROMPT_BUFFER UC4RB_DIR_FILE_RM_NAME# = &UC4RB_TEMP_COMMAND_FILE#
 :  SET &OBJECT# = "PCK.AUTOMIC_FILESYSTEM.PUB.ACTION.DELETE"
 :  SET &ACTOBJ# = ACTIVATE_UC_OBJECT(&OBJECT#,WAIT)
 :  IF &ACTOBJ# = "0"
@@ -22,13 +22,13 @@
 :    PRINT "Error while activating object :&MESSAGE#"
 :    STOP MSG, 50, "Error while activating &OBJECT# object :&MESSAGE#"
 :  ENDIF
-:  P "Run number(&OBJECT#) of the activated object."
+:  P "Run number(&ACTOBJ#) of the activated object."
 :  SET &STATUS# = GET_UC_OBJECT_STATUS(,&ACTOBJ#,"RETCODE")
 :  P "EXECUTED OBJECT [&OBJECT#] STATUS: &STATUS#"
 :  IF &STATUS# <> "0"
 :    STOP MSG, 50, "Error while executing &OBJECT# object"
 :  ELSE
-:  P "File &UC4RB_COMMAND_FILE_PATH# deleted successfully."
+:  P "File &UC4RB_TEMP_COMMAND_FILE# deleted successfully."
 :  ENDIF
 : ENDIF]]></MSCRI>
 </SCRIPT>

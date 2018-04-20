@@ -354,7 +354,7 @@ This action runs provided commands/Script File on the remote server. You can pro
 = Inputs =
 - Commands:               Provide command you want to run on the remote machine. Multiple commands should be split by a semicolon ( ; ). For more info please check example section of action documentation.  E.g. ipconfig
 - Command File Path:  Provide the name of the script file with the full path which will be executed on the remote machine. The script must reside on the agent machine or in a directory that the agent can access. E.g. C:\script\environment.ps1 
-- Return Code:             Provide expected return code. It will be compared with command exit code. If they don't match action fails. If empty no check is performed. E.g. 3
+- Return Code:             Provide expected return code. It will be compared with command exit code. If they don't match action fails. If empty no check is performed. Default value is 0. E.g. 3
 - Timeout:                    Timeout duration for running this command. Use 0 for unlimited time.
  
 
