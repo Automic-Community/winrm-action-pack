@@ -190,6 +190,15 @@ $errors = 0
 
 Try{
 
+! Validate Return Code
+: IF &UC4RB_WRM_RET_CODE# <> ""
+   $cmdReturnCode = "&UC4RB_WRM_RET_CODE#"
+   $isValid = ($cmdReturnCode -match "^[\d]{1}[\d]*$") -or ($cmdReturnCode -match "^[\-]{1}[\d]+$")
+  if (!$isValid){
+      throw 'Invalid Return Code[&UC4RB_WRM_RET_CODE#] has been specified'
+    }
+: ENDIF
+
 ! Check command file exist
   $fileExist = Test-Path  $command_file
   if(!$fileExist){
@@ -275,7 +284,7 @@ if ($result -eq $null)
 ! Comparing provided Return Code with command return code
 :   IF &UC4RB_WRM_RET_CODE# NE ""
 
-   if ($code -ne &UC4RB_WRM_RET_CODE#){
+   if ($code -ne $cmdReturnCode){
          throw "Expected Return Code input does not match with commands return code[$code]."
      }
 
@@ -285,7 +294,7 @@ if ($result -eq $null)
 
 }Catch {
    $errors = 1
-   Write-output 'ERROR:' $error
+   Write-output "ERROR: $($error[0].Exception.Message)"
 
 }Finally {
 ! ----- Close the PSSession session -----
